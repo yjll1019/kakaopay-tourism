@@ -56,4 +56,17 @@ public class ProgramControllerTest {
                 .exchange()
                 .expectStatus().isOk();
     }
+
+    @Test
+    void update_program() {
+        ProgramRequestDto programRequestDto = new ProgramRequestDto("강원도 체험", "강원도 여행", "강원도로 떠나는 여행",
+                "생태체험", "강원도 양양");
+
+        webTestClient.put()
+                .uri("/programs/1")
+                .accept(MediaType.APPLICATION_JSON)
+                .body(Mono.just(programRequestDto), ProgramRequestDto.class)
+                .exchange()
+                .expectStatus().isOk();
+    }
 }

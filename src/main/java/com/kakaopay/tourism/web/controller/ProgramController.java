@@ -34,4 +34,10 @@ public class ProgramController {
     public ResponseEntity<List<ProgramResponseDto>> findByRegionId(@PathVariable String regionId) {
         return ResponseEntity.ok(programService.findByRegionId(regionId));
     }
+
+    @PutMapping("/programs/{programId}")
+    public ResponseEntity update(@PathVariable Long programId, @RequestBody ProgramRequestDto programRequestDto) {
+        programService.update(programId, programRequestDto);
+        return ResponseEntity.ok().build();
+    }
 }

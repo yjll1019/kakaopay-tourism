@@ -70,4 +70,24 @@ public class Program {
     public void addRegions(List<Region> regions) {
         this.regions.addAll(regions);
     }
+
+    public void updateThemes(List<Theme> themes) {
+        this.themes = themes;
+    }
+
+    public void updateRegions(List<Region> regions) {
+        this.regions = regions;
+    }
+
+    public void updateName(String name) {
+        this.name = name;
+    }
+
+    public void updateIntroduce(String introduce) {
+        this.introduce = introduce;
+    }
+
+    public void updateContents(String contents) {
+        this.contents = contents;
+    }
 }

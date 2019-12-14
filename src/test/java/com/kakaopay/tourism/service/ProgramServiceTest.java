@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Optional;
 
 import com.kakaopay.tourism.domain.Program;
 import com.kakaopay.tourism.repository.ProgramRepository;
@@ -75,6 +76,23 @@ public class ProgramServiceTest {
         ProgramRequestDto requestDto = new ProgramRequestDto("강원도 체험", "강원도 여행", "강원도로 떠나는 여행",
                 "생태체험", "강원도 양양");
         programService.save(requestDto);
+
+        verify(themeService, Mockito.atLeastOnce()).saveThemes(anyString());
+        verify(regionService, Mockito.atLeastOnce()).saveRegions(anyString());
+        verify(programRepository, Mockito.atLeastOnce()).save(any());
+    }
+
+    @Test
+    void update_program() {
+        ProgramRequestDto requestDto = new ProgramRequestDto("강원도 체험", "강원도 여행",
+                "강원도로 떠나는 여행", "생태체험", "강원도 양양");
+        Program program = new Program("강원도", "강원도 여행", "강원도로 떠나는 여행",
+                Collections.emptyList(), Collections.emptyList());
+        ReflectionTestUtils.setField(program, "id", 1L);
+
+        given(programRepository.findById(1L)).willReturn(Optional.of(program));
+
+        programService.update(1L, requestDto);
 
         verify(themeService, Mockito.atLeastOnce()).saveThemes(anyString());
         verify(regionService, Mockito.atLeastOnce()).saveRegions(anyString());
