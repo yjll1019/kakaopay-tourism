@@ -24,6 +24,7 @@ public class ThemeServiceTest {
     @Test
     void save_theme() {
         String nameOfTheme = "문화생태체험";
+
         themeService.save(nameOfTheme);
 
         verify(themeRepository, Mockito.times(1)).findByName(nameOfTheme);
