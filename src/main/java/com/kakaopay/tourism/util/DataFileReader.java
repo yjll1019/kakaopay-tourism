@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 public class DataFileReader {
     private static final Logger logger = LoggerFactory.getLogger(DataFileReader.class);
 
-    public static final String BYTE_ORDER_MAKR = "\uFEFF";
+    private static final String BYTE_ORDER_MAKR = "\uFEFF";
 
     public static List<String[]> readFile(File csvFile) {
 
