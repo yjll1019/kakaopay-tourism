@@ -1,10 +1,7 @@
 package com.kakaopay.tourism.util;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,15 +11,15 @@ import com.opencsv.exceptions.CsvException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class DataFileReader {
     private static final Logger logger = LoggerFactory.getLogger(DataFileReader.class);
 
     private static final String BYTE_ORDER_MAKR = "\uFEFF";
 
-    public static List<String[]> readFile(File csvFile) {
-
-        try (CSVReader csvReader = new CSVReader(new InputStreamReader(
-                new FileInputStream(csvFile), StandardCharsets.UTF_8))) {
+    public static List<String[]> readFile(MultipartFile csvFile) {
+        try (CSVReader csvReader = new CSVReader(new InputStreamReader(csvFile.getInputStream()))) {
             List<String[]> rows = new ArrayList<>();
             String[] nextLine;
 
