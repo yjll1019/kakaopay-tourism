@@ -1,12 +1,13 @@
 package com.kakaopay.tourism.service;
 
-import java.io.File;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.kakaopay.tourism.domain.Program;
 import com.kakaopay.tourism.domain.Region;
 import com.kakaopay.tourism.domain.Theme;
 import com.kakaopay.tourism.repository.ProgramRepository;
+import com.kakaopay.tourism.service.dto.ProgramResponseDto;
 import com.kakaopay.tourism.util.DataFileReader;
 
 import org.springframework.stereotype.Service;
@@ -49,5 +50,12 @@ public class ProgramService {
 
             programRepository.save(program);
         }
+    }
+
+    public List<ProgramResponseDto> findByRegionId(String regionId) {
+        List<Program> programs = programRepository.findByRegions_Id(regionId);
+
+        return programs.stream().map(ProgramResponseDto::toResponseDto)
+                .collect(Collectors.toList());
     }
 }

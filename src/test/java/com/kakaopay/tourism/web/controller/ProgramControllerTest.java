@@ -32,4 +32,12 @@ public class ProgramControllerTest {
                 .exchange()
                 .expectStatus().isOk();
     }
+
+    @Test
+    void find_by_region_id() {
+        webTestClient.get()
+                .uri("/regions/region02e22707")
+                .exchange()
+                .expectStatus().isOk();
+    }
 }
