@@ -13,6 +13,7 @@ public class Program {
 
     private String introduce;
 
+    @Column(columnDefinition = "LONGTEXT")
     private String contents;
 
     @ManyToMany
@@ -30,5 +31,29 @@ public class Program {
         this.contents = contents;
         this.regions = regions;
         this.themes = themes;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getIntroduce() {
+        return introduce;
+    }
+
+    public String getContents() {
+        return contents;
+    }
+
+    public List<Region> getRegions() {
+        return regions;
+    }
+
+    public List<Theme> getThemes() {
+        return themes;
     }
 }
