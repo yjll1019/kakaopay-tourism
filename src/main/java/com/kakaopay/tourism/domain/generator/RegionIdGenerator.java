@@ -3,7 +3,7 @@ package com.kakaopay.tourism.domain.generator;
 public class RegionIdGenerator implements IdGenerator {
     @Override
     public String getQuery() {
-        return "select count(*) from Region where id like %s";
+        return "select id from region where id = ?";
     }
 
     @Override

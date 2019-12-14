@@ -20,12 +20,11 @@ public interface IdGenerator extends IdentifierGenerator {
         Logger logger = LoggerFactory.getLogger(IdGenerator.class);
 
         Serializable id = generatePrimaryKey();
-        String query = String.format(getQuery(), id);
+        Connection connection = session.connection();
 
-        try (Connection connection = session.connection();
-             PreparedStatement statement = connection.prepareStatement(query);
-             ResultSet resultSet = statement.executeQuery()) {
-
+        try (PreparedStatement statement = connection.prepareStatement(getQuery())) {
+            statement.setObject(1, id);
+            ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 return generate(session, object);
             }
@@ -40,7 +39,7 @@ public interface IdGenerator extends IdentifierGenerator {
 
     default String generatePrimaryKey() {
         String uuid = UUID.randomUUID().toString().substring(0, 4);
-        return String.format("%s%s%d", getPrefix(), uuid, (Math.random() * 31 * 100));
+        return String.format("%s%s%d", getPrefix(), uuid, (int) (Math.random() * 31 * 100));
     }
 
     String getQuery();
