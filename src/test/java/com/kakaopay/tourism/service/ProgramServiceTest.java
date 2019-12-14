@@ -8,6 +8,7 @@ import java.util.Collections;
 
 import com.kakaopay.tourism.domain.Program;
 import com.kakaopay.tourism.repository.ProgramRepository;
+import com.kakaopay.tourism.service.dto.request.ProgramRequestDto;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -41,7 +42,7 @@ public class ProgramServiceTest {
     private String fileDirectory = "./src/test/resources/";
 
     @Test
-    void save_program() throws IOException {
+    void save_program_with_file() throws IOException {
         String filePath = String.format("%s%s", fileDirectory, "csvTestFile.csv");
         File csvFile = new File(filePath);
 
@@ -67,5 +68,16 @@ public class ProgramServiceTest {
         programService.findByRegionId(regionId);
 
         verify(programRepository, Mockito.atLeastOnce()).findByRegions_Id(regionId);
+    }
+
+    @Test
+    void save_program() {
+        ProgramRequestDto requestDto = new ProgramRequestDto("강원도 체험", "강원도 여행", "강원도로 떠나는 여행",
+                "생태체험", "강원도 양양");
+        programService.save(requestDto);
+
+        verify(themeService, Mockito.atLeastOnce()).saveThemes(anyString());
+        verify(regionService, Mockito.atLeastOnce()).saveRegions(anyString());
+        verify(programRepository, Mockito.atLeastOnce()).save(any());
     }
 }

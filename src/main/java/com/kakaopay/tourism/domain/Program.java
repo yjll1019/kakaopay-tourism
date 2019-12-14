@@ -25,6 +25,12 @@ public class Program {
     public Program() {
     }
 
+    public Program(String name, String introduce, String contents) {
+        this.name = name;
+        this.introduce = introduce;
+        this.contents = contents;
+    }
+
     public Program(String name, String introduce, String contents, List<Region> regions, List<Theme> themes) {
         this.name = name;
         this.introduce = introduce;
@@ -55,5 +61,13 @@ public class Program {
 
     public List<Theme> getThemes() {
         return themes;
+    }
+
+    public void addThemes(List<Theme> themes) {
+        this.themes.addAll(themes);
+    }
+
+    public void addRegions(List<Region> regions) {
+        this.regions.addAll(regions);
     }
 }

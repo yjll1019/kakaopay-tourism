@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.kakaopay.tourism.service.ProgramService;
 import com.kakaopay.tourism.service.dto.ProgramResponseDto;
+import com.kakaopay.tourism.service.dto.request.ProgramRequestDto;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +21,12 @@ public class ProgramController {
     @PostMapping("/files")
     public ResponseEntity registerWithFile(@RequestParam MultipartFile file) {
         programService.save(file);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/programs")
+    public ResponseEntity register(@RequestBody ProgramRequestDto programRequestDto) {
+        programService.save(programRequestDto);
         return ResponseEntity.ok().build();
     }
 

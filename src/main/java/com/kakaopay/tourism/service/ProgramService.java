@@ -8,6 +8,7 @@ import com.kakaopay.tourism.domain.Region;
 import com.kakaopay.tourism.domain.Theme;
 import com.kakaopay.tourism.repository.ProgramRepository;
 import com.kakaopay.tourism.service.dto.ProgramResponseDto;
+import com.kakaopay.tourism.service.dto.request.ProgramRequestDto;
 import com.kakaopay.tourism.util.DataFileReader;
 
 import org.springframework.stereotype.Service;
@@ -50,6 +51,17 @@ public class ProgramService {
 
             programRepository.save(program);
         }
+    }
+
+    public void save(ProgramRequestDto programRequestDto) {
+        List<Theme> themes = themeService.saveThemes(programRequestDto.getTheme());
+        List<Region> regions = regionService.saveRegions(programRequestDto.getRegion());
+
+        Program program = programRequestDto.toEntity();
+        program.addThemes(themes);
+        program.addRegions(regions);
+
+        programRepository.save(program);
     }
 
     public List<ProgramResponseDto> findByRegionId(String regionId) {
