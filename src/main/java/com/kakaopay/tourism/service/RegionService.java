@@ -1,11 +1,17 @@
 package com.kakaopay.tourism.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import com.kakaopay.tourism.domain.Region;
 import com.kakaopay.tourism.repository.RegionRepository;
+import com.kakaopay.tourism.service.parser.RegionParser;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class RegionService {
     private RegionRepository regionRepository;
 
@@ -13,8 +19,15 @@ public class RegionService {
         this.regionRepository = regionRepository;
     }
 
-    public Region save(String rootRegion, String region) {
-        return regionRepository.findByRootRegionAndRegion(rootRegion, region)
-            .orElseGet(() -> regionRepository.save(new Region(rootRegion, region)));
+    public Region save(String region) {
+        return regionRepository.findByName(region)
+                .orElseGet(() -> regionRepository.save(new Region(region)));
+    }
+
+    public List<Region> saveRegions(String regions) {
+        List<String> subRegions = RegionParser.parse(regions);
+        return subRegions.stream()
+                .map(region -> save(region))
+                .collect(Collectors.toList());
     }
 }

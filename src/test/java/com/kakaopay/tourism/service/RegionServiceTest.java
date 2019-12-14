@@ -22,13 +22,12 @@ public class RegionServiceTest {
 
     @Test
     void save_region() {
-        String rootRegion = "강원도";
-        String subRegion = "속초";
+        String region = "강원도 속초";
 
-        regionService.save(rootRegion, subRegion);
+        regionService.save(region);
 
         verify(regionRepository, Mockito.times(1))
-                .findByRootRegionAndRegion(rootRegion, subRegion);
+                .findByName(region);
         verify(regionRepository, Mockito.times(1)).save(any());
     }
 }

@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface RegionRepository extends JpaRepository<Region, String> {
-    Optional<Region> findByRootRegionAndRegion(String rootRegion, String region);
+    Optional<Region> findByName(String name);
 }

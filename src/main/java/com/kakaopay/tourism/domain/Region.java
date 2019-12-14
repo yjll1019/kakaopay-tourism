@@ -14,16 +14,13 @@ public class Region {
     @GeneratedValue(generator = "region_id")
     private String id;
 
-    private String rootRegion;
-
-    private String subRegion;
+    private String name;
 
     public Region() {
     }
 
-    public Region(String rootRegion, String subRegion) {
-        this.rootRegion = rootRegion;
-        this.subRegion = subRegion;
+    public Region(String name) {
+        this.name = name;
     }
 }
 
