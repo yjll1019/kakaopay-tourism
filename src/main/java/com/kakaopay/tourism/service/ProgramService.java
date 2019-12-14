@@ -1,12 +1,15 @@
 package com.kakaopay.tourism.service;
 
-import java.io.File;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.kakaopay.tourism.domain.Program;
 import com.kakaopay.tourism.domain.Region;
 import com.kakaopay.tourism.domain.Theme;
 import com.kakaopay.tourism.repository.ProgramRepository;
+import com.kakaopay.tourism.service.dto.ProgramResponseDto;
+import com.kakaopay.tourism.service.dto.request.ProgramRequestDto;
+import com.kakaopay.tourism.service.exception.IdNotFoundException;
 import com.kakaopay.tourism.util.DataFileReader;
 
 import org.springframework.stereotype.Service;
@@ -49,5 +52,39 @@ public class ProgramService {
 
             programRepository.save(program);
         }
+    }
+
+    public void save(ProgramRequestDto programRequestDto) {
+        List<Theme> themes = themeService.saveThemes(programRequestDto.getTheme());
+        List<Region> regions = regionService.saveRegions(programRequestDto.getRegion());
+
+        Program program = programRequestDto.toEntity();
+        program.addThemes(themes);
+        program.addRegions(regions);
+
+        programRepository.save(program);
+    }
+
+    public List<ProgramResponseDto> findByRegionId(String regionId) {
+        List<Program> programs = programRepository.findByRegions_Id(regionId);
+
+        return programs.stream().map(ProgramResponseDto::toResponseDto)
+                .collect(Collectors.toList());
+    }
+
+    public void update(Long id, ProgramRequestDto programRequestDto) {
+        Program program = programRepository.findById(id)
+                .orElseThrow(() -> new IdNotFoundException(id + "가 존재하지 않습니다."));
+
+        List<Theme> themes = themeService.saveThemes(programRequestDto.getTheme());
+        List<Region> regions = regionService.saveRegions(programRequestDto.getRegion());
+
+        program.updateThemes(themes);
+        program.updateRegions(regions);
+        program.updateName(programRequestDto.getProgramName());
+        program.updateIntroduce(programRequestDto.getProgramIntroduce());
+        program.updateContents(programRequestDto.getProgramContents());
+
+        programRepository.save(program);
     }
 }
