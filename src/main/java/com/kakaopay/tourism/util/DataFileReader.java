@@ -19,7 +19,8 @@ public class DataFileReader {
     private static final String BYTE_ORDER_MAKR = "\uFEFF";
 
     public static List<String[]> readFile(MultipartFile csvFile) {
-        try (CSVReader csvReader = new CSVReader(new InputStreamReader(csvFile.getInputStream()))) {
+        try {
+            CSVReader csvReader = new CSVReader(new InputStreamReader(csvFile.getInputStream(), "EUC-KR"));
             List<String[]> rows = new ArrayList<>();
             String[] nextLine;
 
