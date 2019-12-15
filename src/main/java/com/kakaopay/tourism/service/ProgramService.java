@@ -1,13 +1,18 @@
 package com.kakaopay.tourism.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import com.kakaopay.tourism.domain.Program;
 import com.kakaopay.tourism.domain.Region;
 import com.kakaopay.tourism.domain.Theme;
 import com.kakaopay.tourism.repository.ProgramRepository;
+import com.kakaopay.tourism.service.dto.ProgramIntroduceSearchDto;
 import com.kakaopay.tourism.service.dto.ProgramResponseDto;
+import com.kakaopay.tourism.service.dto.ProgramSearchResponseDtoWithIntroduce;
 import com.kakaopay.tourism.service.dto.ProgramSearchResponseDtoWithRegionName;
 import com.kakaopay.tourism.service.dto.request.ProgramRequestDto;
 import com.kakaopay.tourism.service.exception.IdNotFoundException;
@@ -95,5 +100,27 @@ public class ProgramService {
         return regions.stream().map(region -> ProgramSearchResponseDtoWithRegionName.toDto(region.getId(),
                 programRepository.findByRegions_Id(region.getId())))
                 .collect(Collectors.toList());
+    }
+
+    public ProgramSearchResponseDtoWithIntroduce findByProgramIntroduce(String introduceKeyword) {
+        List<Program> programs = programRepository.findByIntroduceContaining(introduceKeyword);
+
+        Map<String, Integer> result = new HashMap<>();
+
+        for (Program program : programs) {
+            for (Region region : program.getRegions()) {
+                String regionName = region.getName();
+                if (Objects.isNull(result.get(regionName))) {
+                    result.put(regionName, 1);
+                    continue;
+                }
+                result.put(regionName, result.get(regionName) + 1);
+            }
+        }
+
+        return new ProgramSearchResponseDtoWithIntroduce(introduceKeyword,
+                result.entrySet().stream().map(region
+                        -> new ProgramIntroduceSearchDto(region.getKey(), region.getValue()))
+                        .collect(Collectors.toList()));
     }
 }

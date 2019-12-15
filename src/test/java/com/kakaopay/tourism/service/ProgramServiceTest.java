@@ -113,4 +113,19 @@ public class ProgramServiceTest {
 
         verify(programRepository, Mockito.atLeastOnce()).findByRegions_Id(id);
     }
+
+    @Test
+    void search_introduce_keyword() {
+        Program program = new Program("강원도", "강원도 여행", "강원도로 떠나는 여행",
+                Collections.emptyList(), Collections.emptyList());
+        ReflectionTestUtils.setField(program, "id", 1L);
+
+        given(programRepository.findById(1L)).willReturn(Optional.of(program));
+
+        String introduceKeyword = "떠나는";
+
+        programService.findByProgramIntroduce(introduceKeyword);
+
+        verify(programRepository, Mockito.atLeastOnce()).findByIntroduceContaining(introduceKeyword);
+    }
 }
