@@ -1,8 +1,8 @@
 package com.kakaopay.tourism.web.controller;
 
 import com.kakaopay.tourism.service.ProgramService;
-import com.kakaopay.tourism.service.dto.ProgramRecommendRequestDto;
-import com.kakaopay.tourism.service.dto.ProgramRecommendResponseDto;
+import com.kakaopay.tourism.service.dto.request.ProgramRecommendRequestDto;
+import com.kakaopay.tourism.service.dto.response.ProgramRecommendResponseDto;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

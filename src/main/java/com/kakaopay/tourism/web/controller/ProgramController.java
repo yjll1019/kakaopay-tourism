@@ -3,8 +3,11 @@ package com.kakaopay.tourism.web.controller;
 import java.util.List;
 
 import com.kakaopay.tourism.service.ProgramService;
-import com.kakaopay.tourism.service.dto.*;
-import com.kakaopay.tourism.service.dto.request.ProgramRequestDto;
+import com.kakaopay.tourism.service.dto.request.ProgramCreateRequestDto;
+import com.kakaopay.tourism.service.dto.response.ProgramResponseDto;
+import com.kakaopay.tourism.service.dto.response.ProgramSearchResponseDtoWithContents;
+import com.kakaopay.tourism.service.dto.response.ProgramSearchResponseDtoWithIntroduce;
+import com.kakaopay.tourism.service.dto.response.ProgramSearchResponseDtoWithRegionName;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +21,8 @@ public class ProgramController {
     }
 
     @PostMapping("/programs")
-    public ResponseEntity register(@RequestBody ProgramRequestDto programRequestDto) {
-        programService.save(programRequestDto);
+    public ResponseEntity register(@RequestBody ProgramCreateRequestDto programCreateRequestDto) {
+        programService.save(programCreateRequestDto);
         return ResponseEntity.ok().build();
     }
 
@@ -29,8 +32,8 @@ public class ProgramController {
     }
 
     @PutMapping("/programs/{programId}")
-    public ResponseEntity update(@PathVariable Long programId, @RequestBody ProgramRequestDto programRequestDto) {
-        programService.update(programId, programRequestDto);
+    public ResponseEntity update(@PathVariable Long programId, @RequestBody ProgramCreateRequestDto programCreateRequestDto) {
+        programService.update(programId, programCreateRequestDto);
         return ResponseEntity.ok().build();
     }
 

@@ -10,7 +10,7 @@ import java.util.Optional;
 import com.kakaopay.tourism.domain.Program;
 import com.kakaopay.tourism.domain.Region;
 import com.kakaopay.tourism.repository.ProgramRepository;
-import com.kakaopay.tourism.service.dto.request.ProgramRequestDto;
+import com.kakaopay.tourism.service.dto.request.ProgramCreateRequestDto;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -74,7 +74,7 @@ public class ProgramServiceTest {
 
     @Test
     void save_program() {
-        ProgramRequestDto requestDto = new ProgramRequestDto("강원도 체험", "강원도 여행", "강원도로 떠나는 여행",
+        ProgramCreateRequestDto requestDto = new ProgramCreateRequestDto("강원도 체험", "강원도 여행", "강원도로 떠나는 여행",
                 "생태체험", "강원도 양양");
         programService.save(requestDto);
 
@@ -85,7 +85,7 @@ public class ProgramServiceTest {
 
     @Test
     void update_program() {
-        ProgramRequestDto requestDto = new ProgramRequestDto("강원도 체험", "강원도 여행",
+        ProgramCreateRequestDto requestDto = new ProgramCreateRequestDto("강원도 체험", "강원도 여행",
                 "강원도로 떠나는 여행", "생태체험", "강원도 양양");
         Program program = new Program("강원도", "강원도 여행", "강원도로 떠나는 여행",
                 Collections.emptyList(), Collections.emptyList());

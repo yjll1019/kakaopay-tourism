@@ -1,4 +1,4 @@
-package com.kakaopay.tourism.service.strategy;
+package com.kakaopay.tourism.service.recommender.strategy;
 
 import java.util.Map;
 

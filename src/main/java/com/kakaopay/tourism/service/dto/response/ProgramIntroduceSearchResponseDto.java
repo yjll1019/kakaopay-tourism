@@ -1,14 +1,14 @@
-package com.kakaopay.tourism.service.dto;
+package com.kakaopay.tourism.service.dto.response;
 
-public class ProgramIntroduceSearchDto {
+public class ProgramIntroduceSearchResponseDto {
     private String region;
 
     private int count;
 
-    public ProgramIntroduceSearchDto() {
+    public ProgramIntroduceSearchResponseDto() {
     }
 
-    public ProgramIntroduceSearchDto(String region, int count) {
+    public ProgramIntroduceSearchResponseDto(String region, int count) {
         this.region = region;
         this.count = count;
     }

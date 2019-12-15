@@ -1,4 +1,4 @@
-package com.kakaopay.tourism.service.dto;
+package com.kakaopay.tourism.service.dto.request;
 
 public class ProgramRecommendRequestDto {
     private String regionName;

@@ -2,8 +2,8 @@ package com.kakaopay.tourism.web.controller;
 
 import java.io.File;
 
-import com.kakaopay.tourism.service.dto.ProgramRecommendRequestDto;
-import com.kakaopay.tourism.service.dto.request.ProgramRequestDto;
+import com.kakaopay.tourism.service.dto.request.ProgramRecommendRequestDto;
+import com.kakaopay.tourism.service.dto.request.ProgramCreateRequestDto;
 import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Mono;
 
@@ -39,13 +39,13 @@ public class ProgramControllerTest {
 
     @Test
     void register_program() {
-        ProgramRequestDto programRequestDto = new ProgramRequestDto("강원도 체험", "강원도 여행", "강원도로 떠나는 여행",
+        ProgramCreateRequestDto programCreateRequestDto = new ProgramCreateRequestDto("강원도 체험", "강원도 여행", "강원도로 떠나는 여행",
                 "생태체험", "강원도 양양");
 
         webTestClient.post()
                 .uri("/programs")
                 .accept(MediaType.APPLICATION_JSON)
-                .body(Mono.just(programRequestDto), ProgramRequestDto.class)
+                .body(Mono.just(programCreateRequestDto), ProgramCreateRequestDto.class)
                 .exchange()
                 .expectStatus().isOk();
     }
@@ -60,13 +60,13 @@ public class ProgramControllerTest {
 
     @Test
     void update_program() {
-        ProgramRequestDto programRequestDto = new ProgramRequestDto("강원도 체험", "강원도 여행", "강원도로 떠나는 여행",
+        ProgramCreateRequestDto programCreateRequestDto = new ProgramCreateRequestDto("강원도 체험", "강원도 여행", "강원도로 떠나는 여행",
                 "생태체험", "강원도 양양");
 
         webTestClient.put()
                 .uri("/programs/1")
                 .accept(MediaType.APPLICATION_JSON)
-                .body(Mono.just(programRequestDto), ProgramRequestDto.class)
+                .body(Mono.just(programCreateRequestDto), ProgramCreateRequestDto.class)
                 .exchange()
                 .expectStatus().isOk();
     }

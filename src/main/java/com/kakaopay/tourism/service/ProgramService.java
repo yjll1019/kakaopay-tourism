@@ -7,11 +7,12 @@ import com.kakaopay.tourism.domain.Program;
 import com.kakaopay.tourism.domain.Region;
 import com.kakaopay.tourism.domain.Theme;
 import com.kakaopay.tourism.repository.ProgramRepository;
-import com.kakaopay.tourism.service.dto.*;
-import com.kakaopay.tourism.service.dto.request.ProgramRequestDto;
+import com.kakaopay.tourism.service.dto.request.ProgramCreateRequestDto;
+import com.kakaopay.tourism.service.dto.request.ProgramRecommendRequestDto;
+import com.kakaopay.tourism.service.dto.response.*;
 import com.kakaopay.tourism.service.exception.IdNotFoundException;
-import com.kakaopay.tourism.service.strategy.WeightStrategyForTheme;
-import com.kakaopay.tourism.service.util.ProgramRecommender;
+import com.kakaopay.tourism.service.recommender.strategy.WeightStrategyForTheme;
+import com.kakaopay.tourism.service.recommender.ProgramRecommender;
 import com.kakaopay.tourism.util.DataFileReader;
 
 import org.springframework.stereotype.Service;
@@ -20,11 +21,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class ProgramService {
-    public static final int PROGRAM_NAME_COLUMN = 1;
-    public static final int THEME_COLUMN = 2;
-    public static final int REGION_COLUMN = 3;
-    public static final int PROGRAM_INTRODUCE_COLUMN = 4;
-    public static final int PROGRAM_NAME_CONTENTS = 5;
+    private static final int PROGRAM_NAME_COLUMN = 1;
+    private static final int THEME_COLUMN = 2;
+    private static final int REGION_COLUMN = 3;
+    private static final int PROGRAM_INTRODUCE_COLUMN = 4;
+    private static final int PROGRAM_NAME_CONTENTS = 5;
 
     private ProgramRepository programRepository;
 
@@ -55,11 +56,11 @@ public class ProgramService {
         }
     }
 
-    public void save(ProgramRequestDto programRequestDto) {
-        List<Theme> themes = themeService.saveThemes(programRequestDto.getTheme());
-        List<Region> regions = regionService.saveRegions(programRequestDto.getRegion());
+    public void save(ProgramCreateRequestDto programCreateRequestDto) {
+        List<Theme> themes = themeService.saveThemes(programCreateRequestDto.getTheme());
+        List<Region> regions = regionService.saveRegions(programCreateRequestDto.getRegion());
 
-        Program program = programRequestDto.toEntity();
+        Program program = programCreateRequestDto.toEntity();
         program.addThemes(themes);
         program.addRegions(regions);
 
@@ -74,18 +75,18 @@ public class ProgramService {
     }
 
     @Transactional
-    public void update(Long id, ProgramRequestDto programRequestDto) {
+    public void update(Long id, ProgramCreateRequestDto programCreateRequestDto) {
         Program program = programRepository.findById(id)
                 .orElseThrow(() -> new IdNotFoundException(id + "가 존재하지 않습니다."));
 
-        List<Theme> themes = themeService.saveThemes(programRequestDto.getTheme());
-        List<Region> regions = regionService.saveRegions(programRequestDto.getRegion());
+        List<Theme> themes = themeService.saveThemes(programCreateRequestDto.getTheme());
+        List<Region> regions = regionService.saveRegions(programCreateRequestDto.getRegion());
 
         program.updateThemes(themes);
         program.updateRegions(regions);
-        program.updateName(programRequestDto.getProgramName());
-        program.updateIntroduce(programRequestDto.getProgramIntroduce());
-        program.updateContents(programRequestDto.getProgramContents());
+        program.updateName(programCreateRequestDto.getProgramName());
+        program.updateIntroduce(programCreateRequestDto.getProgramIntroduce());
+        program.updateContents(programCreateRequestDto.getProgramContents());
 
         programRepository.save(program);
     }
@@ -115,8 +116,7 @@ public class ProgramService {
         }
 
         return new ProgramSearchResponseDtoWithIntroduce(introduceKeyword,
-                result.entrySet().stream().map(region
-                        -> new ProgramIntroduceSearchDto(region.getKey(), region.getValue()))
+                result.entrySet().stream().map(region -> new ProgramIntroduceSearchResponseDto(region.getKey(), region.getValue()))
                         .collect(Collectors.toList()));
     }
 

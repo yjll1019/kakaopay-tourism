@@ -1,4 +1,4 @@
-package com.kakaopay.tourism.service.dto;
+package com.kakaopay.tourism.service.dto.response;
 
 public class ProgramRecommendResponseDto {
     private Long programCode;

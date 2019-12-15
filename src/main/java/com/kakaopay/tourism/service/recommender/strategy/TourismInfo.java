@@ -1,4 +1,4 @@
-package com.kakaopay.tourism.service.strategy;
+package com.kakaopay.tourism.service.recommender.strategy;
 
 public enum TourismInfo {
     COLUMN_THEME(5), COLUMN_INTRODUCE(3), COLUMN_DETAIL(1);
