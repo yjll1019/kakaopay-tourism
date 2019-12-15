@@ -1,6 +1,7 @@
 package com.kakaopay.tourism.domain;
 
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.*;
 
 @Entity
@@ -93,6 +94,33 @@ public class Program {
 
     public int countOfKeyword(String contentsKeyword) {
         return contents.split(contentsKeyword).length - 1;
+    }
+
+    public int countKeyOfIntroduce(String keyword) {
+        return introduce.split(keyword).length - 1;
+    }
+
+    public int countKeywordOfTheme(String keyword) {
+        return (int) themes.stream()
+                .filter(theme -> theme.containsKeyword(keyword))
+                .count();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Program)) {
+            return false;
+        }
+        final Program program = (Program) o;
+        return Objects.equals(getId(), program.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
     }
 }
 
