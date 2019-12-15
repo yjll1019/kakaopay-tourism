@@ -25,7 +25,7 @@ public class RegionService {
     public List<Region> saveRegions(String regions) {
         List<String> subRegions = RegionParser.parse(regions);
         return subRegions.stream()
-                .map(region -> save(region))
+                .map(this::save)
                 .collect(Collectors.toList());
     }
 
