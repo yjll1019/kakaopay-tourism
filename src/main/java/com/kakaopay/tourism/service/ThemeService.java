@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@Transactional
 public class ThemeService {
     private ThemeRepository themeRepository;
 
@@ -24,10 +23,11 @@ public class ThemeService {
                 .orElseGet(() -> themeRepository.save(new Theme(nameOfTheme)));
     }
 
+    @Transactional
     public List<Theme> saveThemes(String dataOfTheme) {
         List<String> themes = ThemeParser.parse(dataOfTheme);
         return themes.stream()
-                .map(theme -> save(theme))
+                .map(this::save)
                 .collect(Collectors.toList());
     }
 }

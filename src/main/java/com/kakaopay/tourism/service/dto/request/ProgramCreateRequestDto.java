@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.kakaopay.tourism.domain.Program;
 
-public class ProgramRequestDto {
+public class ProgramCreateRequestDto {
     private String programName;
 
     private String programContents;
@@ -15,10 +15,10 @@ public class ProgramRequestDto {
 
     private String region;
 
-    public ProgramRequestDto() {
+    public ProgramCreateRequestDto() {
     }
 
-    public ProgramRequestDto(String programName, String programContents, String programIntroduce, String theme, String region) {
+    public ProgramCreateRequestDto(String programName, String programContents, String programIntroduce, String theme, String region) {
         this.programName = programName;
         this.programContents = programContents;
         this.programIntroduce = programIntroduce;

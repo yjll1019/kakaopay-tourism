@@ -12,4 +12,6 @@ public interface ProgramRepository extends JpaRepository<Program, Long> {
     List<Program> findByRegions_Id(String id);
 
     List<Program> findByIntroduceContaining(String introduceKeyword);
+
+    List<Program> findByContentsContaining(String contentsKeyword);
 }

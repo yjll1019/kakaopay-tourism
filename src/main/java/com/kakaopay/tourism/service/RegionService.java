@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@Transactional
 public class RegionService {
     private RegionRepository regionRepository;
 
@@ -24,10 +23,11 @@ public class RegionService {
                 .orElseGet(() -> regionRepository.save(new Region(region)));
     }
 
+    @Transactional
     public List<Region> saveRegions(String regions) {
         List<String> subRegions = RegionParser.parse(regions);
         return subRegions.stream()
-                .map(region -> save(region))
+                .map(this::save)
                 .collect(Collectors.toList());
     }
 

@@ -23,4 +23,8 @@ public class Theme {
     public String getName() {
         return name;
     }
+
+    public boolean containsKeyword(String keyword) {
+        return name.contains(keyword);
+    }
 }
