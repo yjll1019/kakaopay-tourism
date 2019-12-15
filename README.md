@@ -60,10 +60,7 @@ $ java -jar build/libs/tourism-0.0.1-SNAPSHOT.jar
        - BOM
 
          - 인코딩 된 문서 첫 머리에 사용되어 정확한 인코딩 방식을 알려주는 역할을 한다.
-
        - 문서의 첫 번째 글자인`번` 앞에 해당 문서가 UTF-8임을 나타내는 `"\uFEFF"` 이 삽입되어 있는 것을 알 수 있다.
-
-         <a href='https://ifh.cc/v-VlhMw' target='_blank'><img src='https://ifh.cc/g/VlhMw.jpg' border='0'>
 
    - 해결 방안
 
