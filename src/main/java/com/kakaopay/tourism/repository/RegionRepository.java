@@ -12,5 +12,5 @@ import org.springframework.stereotype.Repository;
 public interface RegionRepository extends JpaRepository<Region, String> {
     Optional<Region> findByName(String name);
 
-    List<Region> findByNameContaining(String format);
+    List<Region> findByNameContaining(String name);
 }

@@ -3,10 +3,7 @@ package com.kakaopay.tourism.web.controller;
 import java.util.List;
 
 import com.kakaopay.tourism.service.ProgramService;
-import com.kakaopay.tourism.service.dto.ProgramResponseDto;
-import com.kakaopay.tourism.service.dto.ProgramSearchResponseDtoWithContents;
-import com.kakaopay.tourism.service.dto.ProgramSearchResponseDtoWithIntroduce;
-import com.kakaopay.tourism.service.dto.ProgramSearchResponseDtoWithRegionName;
+import com.kakaopay.tourism.service.dto.*;
 import com.kakaopay.tourism.service.dto.request.ProgramRequestDto;
 
 import org.springframework.http.ResponseEntity;
@@ -57,5 +54,10 @@ public class ProgramController {
     @GetMapping("/programs/search/contents")
     public ResponseEntity<ProgramSearchResponseDtoWithContents> findByProgramContents(@RequestParam String contentsKeyword) {
         return ResponseEntity.ok(programService.findByProgramContents(contentsKeyword));
+    }
+
+    @PostMapping("/programs/recommend")
+    public ResponseEntity<ProgramRecommendResponseDto> recommendProgram(@RequestBody ProgramRecommendRequestDto programRecommendRequestDto) {
+        return ResponseEntity.ok(programService.recommendProgram(programRecommendRequestDto));
     }
 }
