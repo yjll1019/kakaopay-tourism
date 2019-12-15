@@ -1,9 +1,6 @@
 package com.kakaopay.tourism.service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import com.kakaopay.tourism.domain.Program;
@@ -13,6 +10,8 @@ import com.kakaopay.tourism.repository.ProgramRepository;
 import com.kakaopay.tourism.service.dto.*;
 import com.kakaopay.tourism.service.dto.request.ProgramRequestDto;
 import com.kakaopay.tourism.service.exception.IdNotFoundException;
+import com.kakaopay.tourism.service.strategy.WeightStrategyForTheme;
+import com.kakaopay.tourism.service.util.ProgramRecommender;
 import com.kakaopay.tourism.util.DataFileReader;
 
 import org.springframework.stereotype.Service;
@@ -128,5 +127,18 @@ public class ProgramService {
                 programs.stream()
                         .mapToInt(program -> program.countOfKeyword(contentsKeyword))
                         .sum());
+    }
+
+    public ProgramRecommendResponseDto recommendProgram(ProgramRecommendRequestDto programRecommendDto) {
+        List<Region> regions = regionService.findByNameContaining(programRecommendDto.getRegionName());
+        List<Program> programs = new ArrayList<>();
+
+        for (Region region : regions) {
+            List<Program> program = (programRepository.findByRegions_Id(region.getId()));
+            programs.addAll(program);
+        }
+
+        return new ProgramRecommendResponseDto(ProgramRecommender.recommend(
+                programRecommendDto.getKeyword(), programs, new WeightStrategyForTheme()).getId());
     }
 }

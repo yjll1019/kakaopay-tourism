@@ -2,6 +2,7 @@ package com.kakaopay.tourism.web.controller;
 
 import java.io.File;
 
+import com.kakaopay.tourism.service.dto.ProgramRecommendRequestDto;
 import com.kakaopay.tourism.service.dto.request.ProgramRequestDto;
 import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Mono;
@@ -90,6 +91,19 @@ public class ProgramControllerTest {
     void search_contents() {
         webTestClient.get()
                 .uri("/programs/search/contents?contentsKeyword=문화")
+                .exchange()
+                .expectStatus().isOk();
+    }
+
+    @Test
+    void recommend_program() {
+        ProgramRecommendRequestDto recommendRequestDto
+                = new ProgramRecommendRequestDto("속초", "생태");
+
+        webTestClient.post()
+                .uri("/programs/recommend")
+                .accept(MediaType.APPLICATION_JSON)
+                .body(Mono.just(recommendRequestDto), ProgramRecommendRequestDto.class)
                 .exchange()
                 .expectStatus().isOk();
     }
