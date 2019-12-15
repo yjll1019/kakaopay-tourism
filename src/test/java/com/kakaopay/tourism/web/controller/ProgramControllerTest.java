@@ -1,8 +1,5 @@
 package com.kakaopay.tourism.web.controller;
 
-import java.io.File;
-
-import com.kakaopay.tourism.service.dto.request.ProgramRecommendRequestDto;
 import com.kakaopay.tourism.service.dto.request.ProgramCreateRequestDto;
 import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Mono;
@@ -10,32 +7,14 @@ import reactor.core.publisher.Mono;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
-import org.springframework.web.reactive.function.BodyInserters;
-
-import static org.springframework.http.MediaType.MULTIPART_FORM_DATA;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureWebTestClient
 public class ProgramControllerTest {
     @Autowired
     private WebTestClient webTestClient;
-
-    @Test
-    void register_file() {
-        String fileDirectory = "./src/test/resources/";
-        String filePath = String.format("%s%s", fileDirectory, "csvTestFile.csv");
-        File csvFile = new File(filePath);
-
-        webTestClient.post()
-                .uri("/files")
-                .contentType(MULTIPART_FORM_DATA)
-                .body(BodyInserters.fromMultipartData("file", new FileSystemResource(csvFile)))
-                .exchange()
-                .expectStatus().isOk();
-    }
 
     @Test
     void register_program() {
@@ -91,19 +70,6 @@ public class ProgramControllerTest {
     void search_contents() {
         webTestClient.get()
                 .uri("/programs/search/contents?contentsKeyword=문화")
-                .exchange()
-                .expectStatus().isOk();
-    }
-
-    @Test
-    void recommend_program() {
-        ProgramRecommendRequestDto recommendRequestDto
-                = new ProgramRecommendRequestDto("속초", "생태");
-
-        webTestClient.post()
-                .uri("/programs/recommend")
-                .accept(MediaType.APPLICATION_JSON)
-                .body(Mono.just(recommendRequestDto), ProgramRecommendRequestDto.class)
                 .exchange()
                 .expectStatus().isOk();
     }
