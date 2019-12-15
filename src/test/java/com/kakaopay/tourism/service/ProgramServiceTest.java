@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.Optional;
 
 import com.kakaopay.tourism.domain.Program;
+import com.kakaopay.tourism.domain.Region;
 import com.kakaopay.tourism.repository.ProgramRepository;
 import com.kakaopay.tourism.service.dto.request.ProgramRequestDto;
 import org.junit.jupiter.api.Test;
@@ -97,5 +98,19 @@ public class ProgramServiceTest {
         verify(themeService, Mockito.atLeastOnce()).saveThemes(anyString());
         verify(regionService, Mockito.atLeastOnce()).saveRegions(anyString());
         verify(programRepository, Mockito.atLeastOnce()).save(any());
+    }
+
+    @Test
+    void search_region_keyword() {
+        String id = "region1235";
+        String regionName = "regionName";
+
+        Region region = new Region(regionName);
+        ReflectionTestUtils.setField(region, "id", id);
+
+        given(regionService.findByNameContaining(regionName)).willReturn(Arrays.asList(region));
+        programService.findByRegionKeyword(regionName);
+
+        verify(programRepository, Mockito.atLeastOnce()).findByRegions_Id(id);
     }
 }

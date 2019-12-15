@@ -69,4 +69,12 @@ public class ProgramControllerTest {
                 .exchange()
                 .expectStatus().isOk();
     }
+
+    @Test
+    void search_region_name() {
+        webTestClient.get()
+                .uri("/programs?regionName=남도")
+                .exchange()
+                .expectStatus().isOk();
+    }
 }

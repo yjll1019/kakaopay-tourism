@@ -8,6 +8,7 @@ import com.kakaopay.tourism.domain.Region;
 import com.kakaopay.tourism.domain.Theme;
 import com.kakaopay.tourism.repository.ProgramRepository;
 import com.kakaopay.tourism.service.dto.ProgramResponseDto;
+import com.kakaopay.tourism.service.dto.ProgramSearchResponseDtoWithRegionName;
 import com.kakaopay.tourism.service.dto.request.ProgramRequestDto;
 import com.kakaopay.tourism.service.exception.IdNotFoundException;
 import com.kakaopay.tourism.util.DataFileReader;
@@ -86,5 +87,13 @@ public class ProgramService {
         program.updateContents(programRequestDto.getProgramContents());
 
         programRepository.save(program);
+    }
+
+    public List<ProgramSearchResponseDtoWithRegionName> findByRegionKeyword(String regionName) {
+        List<Region> regions = regionService.findByNameContaining(regionName);
+
+        return regions.stream().map(region -> ProgramSearchResponseDtoWithRegionName.toDto(region.getId(),
+                programRepository.findByRegions_Id(region.getId())))
+                .collect(Collectors.toList());
     }
 }
