@@ -85,4 +85,12 @@ public class ProgramControllerTest {
                 .exchange()
                 .expectStatus().isOk();
     }
+
+    @Test
+    void search_contents() {
+        webTestClient.get()
+                .uri("/programs/search/contents?contentsKeyword=문화")
+                .exchange()
+                .expectStatus().isOk();
+    }
 }

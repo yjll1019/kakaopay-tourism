@@ -128,4 +128,19 @@ public class ProgramServiceTest {
 
         verify(programRepository, Mockito.atLeastOnce()).findByIntroduceContaining(introduceKeyword);
     }
+
+    @Test
+    void search_contents_keyword() {
+        Program program = new Program("강원도", "강원도 여행", "여행을 가요. 강원도로 떠나는 여행",
+                Collections.emptyList(), Collections.emptyList());
+        ReflectionTestUtils.setField(program, "id", 1L);
+
+        given(programRepository.findById(1L)).willReturn(Optional.of(program));
+
+        String contentsKeyword = "여행";
+
+        programService.findByProgramContents(contentsKeyword);
+
+        verify(programRepository, Mockito.atLeastOnce()).findByContentsContaining(contentsKeyword);
+    }
 }

@@ -90,4 +90,9 @@ public class Program {
     public void updateContents(String contents) {
         this.contents = contents;
     }
+
+    public int countOfKeyword(String contentsKeyword) {
+        return contents.split(contentsKeyword).length - 1;
+    }
 }
+
