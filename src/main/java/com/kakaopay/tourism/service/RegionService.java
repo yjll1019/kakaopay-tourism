@@ -30,4 +30,8 @@ public class RegionService {
                 .map(region -> save(region))
                 .collect(Collectors.toList());
     }
+
+    public List<Region> findByNameContaining(String regionName) {
+        return regionRepository.findByNameContaining(regionName);
+    }
 }

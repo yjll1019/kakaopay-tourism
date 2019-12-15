@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.kakaopay.tourism.service.ProgramService;
 import com.kakaopay.tourism.service.dto.ProgramResponseDto;
+import com.kakaopay.tourism.service.dto.ProgramSearchResponseDtoWithRegionName;
 import com.kakaopay.tourism.service.dto.request.ProgramRequestDto;
 
 import org.springframework.http.ResponseEntity;
@@ -39,5 +40,10 @@ public class ProgramController {
     public ResponseEntity update(@PathVariable Long programId, @RequestBody ProgramRequestDto programRequestDto) {
         programService.update(programId, programRequestDto);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("programs")
+    public ResponseEntity<List<ProgramSearchResponseDtoWithRegionName>> findByRegionName(@RequestParam String regionName) {
+        return ResponseEntity.ok(programService.findByRegionKeyword(regionName));
     }
 }
