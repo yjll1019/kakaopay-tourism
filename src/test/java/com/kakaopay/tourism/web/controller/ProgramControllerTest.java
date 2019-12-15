@@ -77,4 +77,12 @@ public class ProgramControllerTest {
                 .exchange()
                 .expectStatus().isOk();
     }
+
+    @Test
+    void search_introduce() {
+        webTestClient.get()
+                .uri("/programs/search?introduceKeyword=세계문화유산")
+                .exchange()
+                .expectStatus().isOk();
+    }
 }
