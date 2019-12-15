@@ -82,7 +82,7 @@ public class ProgramControllerTest {
     @Test
     void search_introduce() {
         webTestClient.get()
-                .uri("/programs/search?introduceKeyword=세계문화유산")
+                .uri("/programs/search/introduces?introduceKeyword=세계문화유산")
                 .exchange()
                 .expectStatus().isOk();
     }

@@ -8,7 +8,6 @@ import com.kakaopay.tourism.service.dto.request.ProgramRequestDto;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 public class ProgramController {
@@ -16,12 +15,6 @@ public class ProgramController {
 
     public ProgramController(ProgramService programService) {
         this.programService = programService;
-    }
-
-    @PostMapping("/files")
-    public ResponseEntity registerWithFile(@RequestParam MultipartFile file) {
-        programService.save(file);
-        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/programs")
@@ -46,7 +39,7 @@ public class ProgramController {
         return ResponseEntity.ok(programService.findByRegionKeyword(regionName));
     }
 
-    @GetMapping("/programs/search")
+    @GetMapping("/programs/search/introduces")
     public ResponseEntity<ProgramSearchResponseDtoWithIntroduce> findByProgramIntroduce(@RequestParam String introduceKeyword) {
         return ResponseEntity.ok(programService.findByProgramIntroduce(introduceKeyword));
     }
@@ -54,10 +47,5 @@ public class ProgramController {
     @GetMapping("/programs/search/contents")
     public ResponseEntity<ProgramSearchResponseDtoWithContents> findByProgramContents(@RequestParam String contentsKeyword) {
         return ResponseEntity.ok(programService.findByProgramContents(contentsKeyword));
-    }
-
-    @PostMapping("/programs/recommend")
-    public ResponseEntity<ProgramRecommendResponseDto> recommendProgram(@RequestBody ProgramRecommendRequestDto programRecommendRequestDto) {
-        return ResponseEntity.ok(programService.recommendProgram(programRecommendRequestDto));
     }
 }
