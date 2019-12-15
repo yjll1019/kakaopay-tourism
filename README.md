@@ -15,6 +15,7 @@
 
 
 ### 기능 목록
+[API 문서](<https://github.com/yjll1019/kakaopay-tourism/wiki/kakaopay-tourism-API-%EB%AC%B8%EC%84%9C>)
 - [x] 데이터 파일(.csv) 에서 각 레코드를 데이터베이스에 저장한다.
 - [x] 생태 관광 정보 데이터를 조회/추가/수정할 수 있다.
 - [x] 생태 관광지 중에 서비스 지역 컬럼에서 특정 지역에서 진행되는 프로그램명과 테마를 출력한다.
