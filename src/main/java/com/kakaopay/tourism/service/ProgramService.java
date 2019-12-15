@@ -19,7 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
-@Transactional
 public class ProgramService {
     public static final int PROGRAM_NAME_COLUMN = 1;
     public static final int THEME_COLUMN = 2;
@@ -74,6 +73,7 @@ public class ProgramService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     public void update(Long id, ProgramRequestDto programRequestDto) {
         Program program = programRepository.findById(id)
                 .orElseThrow(() -> new IdNotFoundException(id + "가 존재하지 않습니다."));

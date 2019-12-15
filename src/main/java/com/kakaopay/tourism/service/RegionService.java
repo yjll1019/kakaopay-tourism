@@ -8,6 +8,7 @@ import com.kakaopay.tourism.repository.RegionRepository;
 import com.kakaopay.tourism.service.parser.RegionParser;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class RegionService {
@@ -22,6 +23,7 @@ public class RegionService {
                 .orElseGet(() -> regionRepository.save(new Region(region)));
     }
 
+    @Transactional
     public List<Region> saveRegions(String regions) {
         List<String> subRegions = RegionParser.parse(regions);
         return subRegions.stream()
