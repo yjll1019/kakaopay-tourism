@@ -1,12 +1,12 @@
-package com.kakaopay.tourism.service.util;
+package com.kakaopay.tourism.service.recommender;
 
 import java.util.*;
 
 import com.kakaopay.tourism.domain.Program;
-import com.kakaopay.tourism.service.strategy.TourismInfo;
-import com.kakaopay.tourism.service.strategy.WeightStrategy;
+import com.kakaopay.tourism.service.recommender.strategy.TourismInfo;
+import com.kakaopay.tourism.service.recommender.strategy.WeightStrategy;
 
-import static com.kakaopay.tourism.service.strategy.TourismInfo.*;
+import static com.kakaopay.tourism.service.recommender.strategy.TourismInfo.*;
 
 public class ProgramRecommender {
     public static Program recommend(String keyword, List<Program> programs, WeightStrategy weightStrategy) {

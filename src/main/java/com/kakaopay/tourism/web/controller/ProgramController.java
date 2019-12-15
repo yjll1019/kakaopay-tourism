@@ -3,12 +3,14 @@ package com.kakaopay.tourism.web.controller;
 import java.util.List;
 
 import com.kakaopay.tourism.service.ProgramService;
-import com.kakaopay.tourism.service.dto.*;
-import com.kakaopay.tourism.service.dto.request.ProgramRequestDto;
+import com.kakaopay.tourism.service.dto.request.ProgramCreateRequestDto;
+import com.kakaopay.tourism.service.dto.response.ProgramResponseDto;
+import com.kakaopay.tourism.service.dto.response.ProgramSearchResponseDtoWithContents;
+import com.kakaopay.tourism.service.dto.response.ProgramSearchResponseDtoWithIntroduce;
+import com.kakaopay.tourism.service.dto.response.ProgramSearchResponseDtoWithRegionName;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 public class ProgramController {
@@ -18,15 +20,9 @@ public class ProgramController {
         this.programService = programService;
     }
 
-    @PostMapping("/files")
-    public ResponseEntity registerWithFile(@RequestParam MultipartFile file) {
-        programService.save(file);
-        return ResponseEntity.ok().build();
-    }
-
     @PostMapping("/programs")
-    public ResponseEntity register(@RequestBody ProgramRequestDto programRequestDto) {
-        programService.save(programRequestDto);
+    public ResponseEntity register(@RequestBody ProgramCreateRequestDto programCreateRequestDto) {
+        programService.save(programCreateRequestDto);
         return ResponseEntity.ok().build();
     }
 
@@ -36,8 +32,8 @@ public class ProgramController {
     }
 
     @PutMapping("/programs/{programId}")
-    public ResponseEntity update(@PathVariable Long programId, @RequestBody ProgramRequestDto programRequestDto) {
-        programService.update(programId, programRequestDto);
+    public ResponseEntity update(@PathVariable Long programId, @RequestBody ProgramCreateRequestDto programCreateRequestDto) {
+        programService.update(programId, programCreateRequestDto);
         return ResponseEntity.ok().build();
     }
 
@@ -46,7 +42,7 @@ public class ProgramController {
         return ResponseEntity.ok(programService.findByRegionKeyword(regionName));
     }
 
-    @GetMapping("/programs/search")
+    @GetMapping("/programs/search/introduces")
     public ResponseEntity<ProgramSearchResponseDtoWithIntroduce> findByProgramIntroduce(@RequestParam String introduceKeyword) {
         return ResponseEntity.ok(programService.findByProgramIntroduce(introduceKeyword));
     }
@@ -54,10 +50,5 @@ public class ProgramController {
     @GetMapping("/programs/search/contents")
     public ResponseEntity<ProgramSearchResponseDtoWithContents> findByProgramContents(@RequestParam String contentsKeyword) {
         return ResponseEntity.ok(programService.findByProgramContents(contentsKeyword));
-    }
-
-    @PostMapping("/programs/recommend")
-    public ResponseEntity<ProgramRecommendResponseDto> recommendProgram(@RequestBody ProgramRecommendRequestDto programRecommendRequestDto) {
-        return ResponseEntity.ok(programService.recommendProgram(programRecommendRequestDto));
     }
 }

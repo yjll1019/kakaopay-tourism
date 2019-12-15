@@ -1,4 +1,4 @@
-package com.kakaopay.tourism.service.dto;
+package com.kakaopay.tourism.service.dto.response;
 
 import java.util.stream.Collectors;
 

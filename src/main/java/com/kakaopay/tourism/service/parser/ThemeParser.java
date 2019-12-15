@@ -10,6 +10,7 @@ public class ThemeParser {
     public static List<String> parse(String subRegions) {
         return Arrays.stream(subRegions.split(DATA_SEPARATOR))
                 .map(String::trim)
+                .filter(theme -> theme.length() > 0)
                 .collect(Collectors.toList());
     }
 }
